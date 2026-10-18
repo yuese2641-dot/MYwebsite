@@ -1,0 +1,171 @@
+/* ===== 颜色和字体（想改风格，先改这里） ===== */
+:root {
+    --bg: #ffffff;
+    --bg-gray: #f5f5f7;
+    --bg-dark: #000000;
+    --text: #1d1d1f;
+    --text-soft: #6e6e73;
+    --accent: #0071e3;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+            "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
+body {
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible, video:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ===== 顶部导航：半透明毛玻璃，固定在最上面 ===== */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 48px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.nav-inner {
+    max-width: 980px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav-logo { font-size: 17px; font-weight: 600; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 13px; color: var(--text-soft); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+/* ===== 首页大标题 ===== */
+.hero {
+    padding: 160px 22px 120px;
+    text-align: center;
+}
+.hero h1 {
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+.hero p {
+    margin-top: 20px;
+    font-size: clamp(17px, 2.4vw, 24px);
+    color: var(--text-soft);
+}
+
+/* ===== 通用区块 ===== */
+.section {
+    padding: 110px 22px;
+    scroll-margin-top: 48px;   /* 点导航跳转时，不被顶部栏挡住 */
+}
+.section.gray { background: var(--bg-gray); }
+.section.dark { background: var(--bg-dark); color: #f5f5f7; }
+.container { max-width: 980px; margin: 0 auto; }
+.center { text-align: center; }
+
+h2 {
+    font-size: clamp(28px, 4.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+.section p { font-size: 19px; color: var(--text-soft); }
+.section.dark p { color: #a1a1a6; }
+
+/* ===== 自我介绍：头像 + 文字 ===== */
+.about {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+.avatar {
+    flex: 0 0 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: var(--bg-gray);   /* 没有头像图片时显示灰色圆 */
+    background-size: cover;
+    background-position: center;
+}
+.about p + p { margin-top: 14px; }
+
+/* ===== 作品卡片 ===== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+}
+.card {
+    display: block;
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 40px 32px;
+    min-height: 220px;
+    transition: transform 0.25s ease;
+}
+a.card:hover { transform: scale(1.02); }
+.card h3 { font-size: 26px; margin-bottom: 12px; }
+.card p { font-size: 17px; }
+.card-tag {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--accent);
+}
+.card-soon { background: transparent; border: 2px dashed #d2d2d7; }
+.card-soon h3, .card-soon p { color: var(--text-soft); }
+
+/* ===== 视频 ===== */
+video {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 80vh;   /* 竖屏视频不会撑得特别高 */
+    margin: 48px auto 0;
+    border-radius: 20px;
+    background: #1d1d1f;
+}
+
+/* ===== 联系方式 ===== */
+.contact-line { margin-top: 14px; color: var(--text); }
+#contact p:first-of-type { margin-bottom: 28px; }
+
+.footer {
+    padding: 28px 22px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-soft);
+    background: var(--bg-gray);
+}
+
+/* ===== 手机屏幕适配 ===== */
+@media (max-width: 700px) {
+    .nav-links { gap: 18px; }
+    .nav-logo { display: none; }
+    .nav-inner { justify-content: center; }
+    .hero { padding: 120px 22px 80px; }
+    .section { padding: 80px 22px; }
+    .about { flex-direction: column; text-align: center; gap: 32px; }
+}

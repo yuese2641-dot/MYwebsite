@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>我的编程小站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 顶部导航栏：每个链接的 href 对应下面某个区块的 id -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="nav-logo" href="#top">我的小站</a>
+            <ul class="nav-links">
+                <li><a href="#about">介绍</a></li>
+                <li><a href="#works">作品</a></li>
+                <li><a href="#video">视频</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 首页大标题 -->
+    <header class="hero" id="top">
+        <h1>用代码，做点有用的小东西。</h1>
+        <p>这里记录我学编程以来做过的每一个工具。</p>
+    </header>
+
+    <!-- 自我介绍 -->
+    <section class="section" id="about">
+        <div class="container about">
+            <!-- 头像：把你的图片放到 images 文件夹，命名为 avatar.jpg -->
+            <div class="avatar" style="background-image: url('images/avatar.jpg');"></div>
+            <div>
+                <h2>你好，我是月色</h2>
+                <p>我正在自学编程。从 HTML 和 CSS 开始，现在在学 JavaScript，想做出别人真正用得上的工具。</p>
+                <p>这个小站会一直更新，记录我做过的每个作品。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品区：每个 .card 是一个作品，复制一份就能添加新作品 -->
+    <section class="section gray" id="works">
+        <div class="container">
+            <h2 class="center">我做过的工具</h2>
+            <div class="cards">
+                <a class="card" href="todo/index.html">
+                    <h3>待办清单</h3>
+                    <p>输入、添加、点击删除，刷新页面后内容还在。</p>
+                    <span class="card-tag">HTML · CSS · JavaScript</span>
+                </a>
+                <div class="card card-soon">
+                    <h3>下一个作品</h3>
+                    <p>正在构思中，做好后会放在这里。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频：把视频放到 videos 文件夹，命名为 intro.mp4 -->
+    <section class="section dark" id="video">
+        <div class="container center">
+            <h2>我的小狗</h2>
+            <video controls preload="metadata" poster="images/poster.jpg">
+                <source src="videos/intro.mp4" type="video/mp4">
+                你的浏览器不支持视频播放。
+            </video>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section class="section" id="contact">
+        <div class="container center">
+            <h2>联系我</h2>
+            <p>想一起聊聊，或者有什么小工具想法，欢迎找我。</p>
+            <p class="contact-line">微信：bagayalu312</p>
+            <p class="contact-line">邮箱：yuese2641@gmail.com</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 我的编程小站</p>
+    </footer>
+
+</body>
+
+</html>
