@@ -1,0 +1,162 @@
+:root {
+    --text: #1d1d1f;
+    --soft: #86868b;
+    --line: rgba(0, 0, 0, 0.08);
+    --accent: #0071e3;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+            "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    color: var(--text);
+    min-height: 100vh;
+    /* 淡淡的彩色光斑，让毛玻璃有东西可以"模糊" */
+    background:
+        radial-gradient(circle at 12% 18%, #cfe3ff 0, transparent 42%),
+        radial-gradient(circle at 88% 82%, #ffdbe9 0, transparent 42%),
+        #f5f5f7;
+    background-attachment: fixed;
+}
+
+button, input { font: inherit; color: inherit; }
+button:focus-visible, input:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* 毛玻璃 */
+.glass {
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.app {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* ===== 左边：文件夹 ===== */
+.sidebar { border-radius: 24px; padding: 20px 14px; }
+.back { display: block; font-size: 13px; color: var(--accent); text-decoration: none; margin: 0 8px 18px; }
+.sidebar h2 { font-size: 13px; color: var(--soft); font-weight: 600; margin: 0 8px 8px; }
+#folderList { list-style: none; }
+
+.folder {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.folder:hover { background: rgba(0, 0, 0, 0.04); }
+.folder.active { background: var(--accent); color: #fff; }
+.folder-name { flex: 1; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.folder-num { font-size: 14px; opacity: 0.6; }
+.folder.active .del { color: rgba(255, 255, 255, 0.7); }
+
+.add-folder { display: flex; gap: 8px; margin: 14px 4px 0; }
+.add-folder input {
+    flex: 1; min-width: 0;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    font-size: 15px;
+}
+.add-folder button {
+    width: 36px; border: 0; border-radius: 10px;
+    background: var(--accent); color: #fff; font-size: 20px; cursor: pointer;
+}
+
+/* ===== 右边：待办 ===== */
+.main { min-width: 0; }
+#title { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; }
+#count { margin: 4px 0 20px; color: var(--soft); font-size: 15px; }
+
+#todoList {
+    list-style: none;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+#todoList:empty { display: none; }
+
+.todo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+}
+.todo:last-child { border-bottom: 0; }
+.todo-text { flex: 1; font-size: 17px; word-break: break-all; }
+
+/* 左边的小方格，勾选后变蓝并出现对号（想要圆形，把 7px 改成 50%） */
+.check {
+    flex: 0 0 24px;
+    width: 24px; height: 24px;
+    border: 2px solid #c7c7cc;
+    border-radius: 7px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s, border-color 0.15s;
+}
+.todo.done .check { background: var(--accent); border-color: var(--accent); }
+.todo.done .check::after {
+    content: "";
+    position: absolute;
+    left: 5px; top: 1px;
+    width: 6px; height: 11px;
+    border: solid #fff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+.todo.done .todo-text { color: var(--soft); text-decoration: line-through; }
+
+/* 删除按钮 */
+.del {
+    border: 0; background: none;
+    color: #c7c7cc;
+    font-size: 22px; line-height: 1;
+    padding: 2px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.del:hover { color: #ff3b30; }
+
+/* 添加待办的输入条（毛玻璃） */
+.add-todo {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px 10px 10px 18px;
+    border-radius: 999px;
+}
+.add-todo input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 17px; }
+.add-todo input:focus-visible { outline: none; }
+.add-todo button {
+    border: 0; border-radius: 999px;
+    padding: 9px 22px;
+    background: var(--accent); color: #fff;
+    font-size: 15px; cursor: pointer;
+}
+
+/* 手机 */
+@media (max-width: 720px) {
+    .app { grid-template-columns: 1fr; padding: 20px 14px; }
+}
