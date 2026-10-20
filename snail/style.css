@@ -1,0 +1,161 @@
+:root {
+    --text: #1d1d1f;
+    --soft: #86868b;
+    --accent: #0071e3;
+    --green: #34c759;
+    --size: 56px;   /* 每个格子的大小，JS 会按屏幕宽度自动调整 */
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+            "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    color: var(--text);
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 12% 18%, #cfe3ff 0, transparent 42%),
+        radial-gradient(circle at 88% 82%, #d9f5e0 0, transparent 42%),
+        #f5f5f7;
+    background-attachment: fixed;
+}
+
+button { font: inherit; color: inherit; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.glass {
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.game {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 28px 20px 40px;
+    text-align: center;
+}
+.back { display: block; text-align: left; font-size: 13px; color: var(--accent); text-decoration: none; margin-bottom: 18px; }
+h1 { font-size: 34px; letter-spacing: -0.01em; }
+.hint { margin: 6px 0 20px; color: var(--soft); font-size: 15px; }
+
+/* 顶部信息条（毛玻璃） */
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+}
+.levels { display: flex; gap: 6px; }
+.levels button {
+    width: 32px; height: 32px;
+    border: 0; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.06);
+    font-size: 14px; cursor: pointer;
+}
+.levels button.active { background: var(--accent); color: #fff; }
+.levels button:disabled { opacity: 0.35; cursor: not-allowed; }
+#steps { font-size: 15px; color: var(--soft); }
+.actions { display: flex; gap: 8px; }
+.actions button {
+    border: 0; border-radius: 999px;
+    padding: 7px 16px;
+    background: rgba(0, 0, 0, 0.06);
+    font-size: 14px; cursor: pointer;
+}
+.actions button:hover { background: rgba(0, 0, 0, 0.1); }
+.actions button:disabled { opacity: 0.4; cursor: default; }
+
+/* 棋盘 */
+.board-wrap { position: relative; display: flex; justify-content: center; }
+.board {
+    display: grid;
+    gap: 4px;
+    padding: 12px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.5);
+}
+.cell {
+    width: var(--size); height: var(--size);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: calc(var(--size) * 0.62);
+    line-height: 1;
+    position: relative;
+}
+.cell.floor { background: #fff; }
+.cell.void { background: transparent; }
+.cell.wall { background: #aeaeb2; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.12); }
+
+/* 目标点：一个圆圈 */
+.cell.target::before {
+    content: "";
+    width: 36%; height: 36%;
+    border: 3px solid var(--green);
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* 箱子：圆角方块，推到目标上变绿 */
+.cell.box::after {
+    content: "";
+    position: absolute;
+    inset: 9%;
+    border-radius: 10px;
+    background: linear-gradient(160deg, #e8b36a, #c98d3f);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.cell.box.on::after { background: linear-gradient(160deg, #5ed67e, #2fb351); }
+.cell.box::before { display: none; }
+
+.snail { position: relative; z-index: 1; }
+
+/* 通关提示（毛玻璃） */
+.win {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 28px 40px;
+    border-radius: 24px;
+    z-index: 5;
+}
+.win[hidden] { display: none; }
+.win h2 { font-size: 28px; margin-bottom: 6px; }
+.win p { color: var(--soft); margin-bottom: 18px; }
+.win button {
+    border: 0; border-radius: 999px;
+    padding: 10px 28px;
+    background: var(--accent); color: #fff;
+    font-size: 16px; cursor: pointer;
+}
+
+/* 手机方向键：只在触屏设备显示 */
+.pad { display: none; }
+@media (pointer: coarse) {
+    .pad {
+        display: grid;
+        grid-template-columns: repeat(3, 64px);
+        grid-template-areas: ". up ." "left down right";
+        gap: 8px;
+        justify-content: center;
+        margin-top: 24px;
+    }
+    .pad button {
+        height: 56px;
+        border: 0; border-radius: 16px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        font-size: 22px;
+    }
+    .pad [data-d="up"] { grid-area: up; }
+    .pad [data-d="left"] { grid-area: left; }
+    .pad [data-d="down"] { grid-area: down; }
+    .pad [data-d="right"] { grid-area: right; }
+}
