@@ -16,6 +16,7 @@
                 <li><a href="#interests">兴趣</a></li>
                 <li><a href="#life">日常</a></li>
                 <li><a href="#works">作品</a></li>
+                <li><a href="#guestbook">留言</a></li>
                 <li><a href="#contact">联系</a></li>
             </ul>
         </div>
@@ -91,6 +92,23 @@
         </div>
     </section>
 
+    <section class="section gray guestbook-page snap-page" id="guestbook">
+        <div class="container guestbook-container">
+            <p class="section-kicker">GUESTBOOK</p>
+            <h2>留下一句话。</h2>
+            <p class="guestbook-intro">欢迎来访。写下你的想法或问候。</p>
+            <form class="guestbook-form" id="guestbook-form">
+                <label for="guest-name">怎么称呼你？</label>
+                <input id="guest-name" name="name" maxlength="30" placeholder="你的名字（选填）">
+                <label for="guest-message">留言内容</label>
+                <textarea id="guest-message" name="message" rows="4" maxlength="500" placeholder="写点什么吧……" required></textarea>
+                <div class="guestbook-form-footer"><span id="guestbook-status" role="status">目前留言只保存在这台设备的浏览器里。</span><button type="submit">发布留言</button></div>
+            </form>
+            <div class="guestbook-list-heading"><h3>来访留言</h3><span id="guestbook-count">0 条</span></div>
+            <ul class="guestbook-list" id="guestbook-list" aria-live="polite"></ul>
+        </div>
+    </section>
+
     <section class="section contact-page snap-page" id="contact">
         <div class="container center"><p class="section-kicker">SAY HELLO</p><h2>谢谢你来逛逛。</h2><p>想一起聊聊，或者有什么小工具想法，欢迎找我。</p><p class="contact-line">微信：bagayalu312</p><p class="contact-line">邮箱：yuese2641@gmail.com</p><footer class="footer"><p>© 2026 月色的个人杂志</p></footer></div>
     </section>
@@ -107,5 +125,6 @@
         }), { threshold: 0.55 });
         pages.forEach(page => observer.observe(page));
     </script>
+    <script src="guestbook.js"></script>
 </body>
 </html>
